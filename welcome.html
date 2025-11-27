@@ -2,47 +2,47 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Bienvenido</title>
-</head>
+    <title>Bienvenido al Sistema</title>
+    <link rel="stylesheet" href="styles.css"> </head>
 <body>
-    <h1 id="welcomeTitle">Cargando...</h1>
-    <p id="userInfo"></p>
-    <p id="currentTime"></p>
-    <p id="extraMessage"></p>
-    
-    <button id="logoutButton">Cerrar Sesión</button>
+    <div class="container" id="welcomeContainer">
+        <h1 id="welcomeTitle">Cargando datos...</h1>
+        <p id="userInfo"></p>
+        <p id="currentTime"></p>
+        <p id="extraMessage"></p>
+        
+        <button id="logoutButton">Cerrar Sesión</button>
+    </div>
 
     <script>
         const token = localStorage.getItem('authToken');
         
+        // 1. Verificación Inicial del Token
         if (!token) {
-            // Si no hay token, redirige a "No tienes permisos" (Requerido)
-            window.location.href = 'no-permisos.html';
+            window.location.href = 'no-permisos.html'; // Redirige si no hay token (Requerido)
         }
 
         async function loadWelcomeData() {
             try {
-                // Petición al endpoint protegido, enviando el token en la cabecera (Requerido)
+                // 2. Petición al endpoint protegido con el Token en la cabecera
                 const response = await fetch('api.php/api/welcome', {
                     method: 'GET',
                     headers: {
-                        'Authorization': `Bearer ${token}` // Formato requerido
+                        'Authorization': `Bearer ${token}` // Envío del Token (Requerido)
                     }
                 });
 
                 if (response.ok) { // 200 OK
                     const data = await response.json();
-                    // Muestra los datos del usuario y la hora actual (Requerido)
+                    // Muestra los datos obtenidos de la API (Requerido)
                     document.getElementById('welcomeTitle').textContent = `¡Bienvenido, ${data.username}!`;
                     document.getElementById('userInfo').textContent = `Usuario autenticado: ${data.username}`;
                     document.getElementById('currentTime').textContent = `Hora actual del servidor: ${data.current_time}`;
                     document.getElementById('extraMessage').textContent = data.additional_welcome;
-                } else if (response.status === 403) { // 403 Forbidden (Requerido)
-                    // Token inválido o expirado, redirige a la página de error
-                    window.location.href = 'no-permisos.html';
+                } else if (response.status === 403) { // 403 Forbidden
+                    window.location.href = 'no-permisos.html'; // Redirige a error (Requerido)
                 } else {
                     alert('Error al obtener datos: ' + response.status);
-                    // Por seguridad, si falla, eliminamos el token y volvemos al login
                     logout(); 
                 }
             } catch (error) {
@@ -53,10 +53,8 @@
         }
 
         function logout() {
-            // Elimina el token almacenado en el cliente (Requerido)
-            localStorage.removeItem('authToken'); 
-            // Redirige al login (Requerido)
-            window.location.href = 'index.html'; 
+            localStorage.removeItem('authToken'); // Elimina el token (Requerido)
+            window.location.href = 'index.html'; // Redirige al login (Requerido)
         }
 
         document.getElementById('logoutButton').addEventListener('click', logout);
@@ -65,3 +63,5 @@
     </script>
 </body>
 </html>
+
+

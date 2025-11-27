@@ -1,0 +1,134 @@
+/*
+ * ---------------------------------------
+ * Estilos Generales y del Cuerpo
+ * ---------------------------------------
+ */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;    /* Centra verticalmente */
+    min-height: 100vh;      /* Ocupa el 100% de la altura de la ventana */
+    background-color: #f4f7f9; /* Fondo gris claro */
+    color: #333;
+}
+
+/* * ---------------------------------------
+ * Estilo de Contenedores y Tarjetas
+ * ---------------------------------------
+ */
+.container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    width: 100%;
+    max-width: 400px; /* Ancho máximo para el formulario de login */
+    text-align: center;
+}
+
+/* * ---------------------------------------
+ * Estilo de Encabezados y Mensajes
+ * ---------------------------------------
+ */
+h1 {
+    color: #007bff; /* Azul primario */
+    margin-bottom: 25px;
+    font-size: 1.8em;
+}
+
+/* Estilo para los mensajes de éxito/error */
+#message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+#message:not(:empty) {
+    border: 1px solid currentColor; /* Borde del color del texto */
+}
+
+
+/* * ---------------------------------------
+ * Estilo de Formularios e Inputs
+ * ---------------------------------------
+ */
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Incluye padding y borde en el ancho total */
+}
+
+/* * ---------------------------------------
+ * Estilo de Botones
+ * ---------------------------------------
+ */
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Botones de ancho completo */
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo específico para el botón de cerrar sesión */
+#logoutButton {
+    background-color: #dc3545; /* Rojo para acción de salir */
+    margin-top: 30px;
+}
+
+#logoutButton:hover {
+    background-color: #c82333;
+}
+
+/* * ---------------------------------------
+ * Estilos para las páginas de Bienvenida y Error
+ * ---------------------------------------
+ */
+
+/* Contenedor más ancho para la página de bienvenida */
+#welcomeContainer {
+    max-width: 600px;
+    text-align: left;
+}
+
+/* Estilo específico para el mensaje de Bienvenida */
+#userInfo, #currentTime, #extraMessage {
+    background-color: #e9f7fe;
+    padding: 15px;
+    margin-top: 15px;
+    border-left: 5px solid #007bff;
+    border-radius: 3px;
+    line-height: 1.6;
+}
+
+/* Estilo para el mensaje de Error/No Permisos */
+.error-message {
+    color: #dc3545;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
