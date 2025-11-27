@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - API Auth</title>
+</head>
+<body>
+    <h1>Iniciar Sesión</h1>
+    <form id="loginForm">
+        <label for="username">Usuario:</label>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <button type="submit">Entrar</button>
+        <p id="message" style="color: red;"></p>
+    </form>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const messageElement = document.getElementById('message');
+            messageElement.textContent = ''; // Limpia mensajes anteriores
+
+            try {
+                // Llama al endpoint de autenticación POST /api/login (Requerido)
+                const response = await fetch('api.php/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) { // Código 200 OK
+                    // Almacena el token en localStorage (Requerido)
+                    localStorage.setItem('authToken', data.token);
+                    // Redirige a la pantalla de bienvenida
+                    window.location.href = 'welcome.html';
+                } else if (response.status === 401) { // Código 401 Unauthorized (Requerido)
+                    messageElement.textContent = 'Error: ' + data.error;
+                } else {
+                    messageElement.textContent = 'Error desconocido en el servidor.';
+                }
+
+            } catch (error) {
+                messageElement.textContent = 'Error de conexión: ' + error.message;
+                console.error('Fetch Error:', error);
+            }
+        });
+        
+        // Comprueba si ya hay un token al cargar la página. Si lo hay, redirige.
+        if (localStorage.getItem('authToken')) {
+             window.location.href = 'welcome.html';
+        }
+    </script>
+</body>
+</html>
+
